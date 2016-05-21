@@ -2,8 +2,9 @@ from __future__ import unicode_literals  # for python2 compatibility
 # -*- coding: utf-8 -*-
 # created at UC Berkeley 2015
 # Authors: Christopher Hench & Alex Estes © 2016
+# ==============================================================================
 
-'''This program syllabifies any text in any language 
+'''This program syllabifies any text in any language
 solely on the Onset Maximization principle (Principle of Legality).
 Input is text file'''
 
@@ -46,7 +47,7 @@ def getonsets(text):
 
     onsets = [x for x in onsets if x != '']  # get rid of empty onsets
 
-    #now remove onsets caused by errors, i.e. less than .02% of onsets
+    # now remove onsets caused by errors, i.e. less than .02% of onsets
     freq = Counter(onsets)
 
     total_onsets = 0
@@ -55,7 +56,7 @@ def getonsets(text):
 
     onsets = []
     for k, v in freq.items():
-        if (v/total_onsets) > .0002:
+        if (v / total_onsets) > .0002:
             onsets.append(k)
 
     return (onsets, tokens)
@@ -78,11 +79,11 @@ def legalipy(word, onsets):
     if vowelcount == 1:  # monosyllabic
         syllset.append(revword)
 
-    #begin main algorithm
+    # begin main algorithm
     elif vowelcount > 1:
         syll = ""
 
-        #following binaries trigger different routes
+        # following binaries trigger different routes
         onsetbinary = 0
         newsyllbinary = 1
 
@@ -106,23 +107,29 @@ def legalipy(word, onsets):
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-1] in [ons[-2:] for ons in onsets] and syll[-2] in vowels:
+                elif letter + syll[-1] in [ons[-2:] for ons in onsets] and
+                syll[-2] in vowels:
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-2:][::-1] in [ons[-3:] for ons in onsets] and syll[-3] in vowels:
+                elif letter + syll[-2:][::-1] in [ons[-3:] for ons in onsets]
+                and syll[-3] in vowels:
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-3:][::-1] in [ons[-4:] for ons in onsets] and syll[-4] in vowels:
+                elif letter + syll[-3:][::-1] in [ons[-4:] for ons in onsets]
+                and syll[-4] in vowels:
                     syll += letter
                     onsetbinary = 1
 
-                #order is important for following two due to onsetbinary variable
-                elif letter in vowels and onsetbinary == 0:  # i.e. syllable doesn't end in vowel (onset not yet found)
+                # order is important for following two due to onsetbinary
+                # variable
+                # i.e. syllable doesn't end in vowel (onset not yet found)
+                elif letter in vowels and onsetbinary == 0:
                     syll += letter
 
-                elif letter in vowels and onsetbinary == 1:  # i.e. syllable ends in vowel, onset found, restart syllable
+                # i.e. syllable ends in vowel, onset found, restart syllable
+                elif letter in vowels and onsetbinary == 1:
                     syllset.append(syll)
                     syll = letter
 
@@ -133,7 +140,8 @@ def legalipy(word, onsets):
 
         syllset.append(syll)
 
-    syllset = [syll[::-1] for syll in syllset][::-1]  # reverse syllset then reverse syllables
+    # reverse syllset then reverse syllables
+    syllset = [syll[::-1] for syll in syllset][::-1]
 
     return (syllset)
 
