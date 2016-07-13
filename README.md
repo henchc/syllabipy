@@ -4,3 +4,5 @@ Syllabification purely on legality principle. The algorithm works for any langua
 ```
 python legalipy1.py <document file>
 ```
+
+LegaliPy has been incorporated into the [Talisman](https://github.com/Yomguithereal/talisman) NLP library for Javascript.
