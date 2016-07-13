@@ -18,7 +18,6 @@ from collections import Counter
 
 
 def cleantext(text):
-    text = text.lower()
     text = ''.join([x for x in text if not x.isdigit()])
 
     remove_char = string.punctuation + '»«˃˂〈〉♦•—¿·'
@@ -37,6 +36,7 @@ def getonsets(text):
 
     onsets = []
     for word in tokens:
+        word = word.lower()
         onset = ""
         for letter in word:
             if letter not in vowels:  # onset is everying up to first vowel
@@ -71,7 +71,7 @@ def legalipy(word, onsets):
 
     syllset = []
     for letter in revword:
-        if letter in vowels:
+        if letter.lower() in vowels:
             vowelcount += 1
         else:
             pass
@@ -90,7 +90,7 @@ def legalipy(word, onsets):
         for letter in revword:
 
             if newsyllbinary == 1:  # i.e. if we have a new syllable
-                if letter not in vowels:
+                if letter.lower() not in vowels:
                     syll += letter
 
                 else:
@@ -103,33 +103,30 @@ def legalipy(word, onsets):
                 if syll == "":  # fixes last syllable
                     syll += letter
 
-                elif letter in onsets and syll[-1] in vowels:
+                elif (letter.lower() in onsets and syll[-1].lower() in vowels):
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-1] in [ons[-2:] for ons in onsets] and
-                syll[-2] in vowels:
+                elif (letter.lower() + syll[-1].lower() in [ons[-2:] for ons in onsets] and syll[-2].lower() in vowels):
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-2:][::-1] in [ons[-3:] for ons in onsets]
-                and syll[-3] in vowels:
+                elif (letter.lower() + syll[-2:][::-1].lower() in [ons[-3:] for ons in onsets] and syll[-3].lower() in vowels):
                     syll += letter
                     onsetbinary = 1
 
-                elif letter + syll[-3:][::-1] in [ons[-4:] for ons in onsets]
-                and syll[-4] in vowels:
+                elif (letter + syll[-3:][::-1].lower() in [ons[-4:] for ons in onsets] and syll[-4].lower() in vowels):
                     syll += letter
                     onsetbinary = 1
 
                 # order is important for following two due to onsetbinary
                 # variable
                 # i.e. syllable doesn't end in vowel (onset not yet found)
-                elif letter in vowels and onsetbinary == 0:
+                elif letter.lower() in vowels and onsetbinary == 0:
                     syll += letter
 
                 # i.e. syllable ends in vowel, onset found, restart syllable
-                elif letter in vowels and onsetbinary == 1:
+                elif letter.lower() in vowels and onsetbinary == 1:
                     syllset.append(syll)
                     syll = letter
 
