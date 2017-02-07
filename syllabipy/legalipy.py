@@ -13,19 +13,8 @@ import re
 import csv
 import sys
 from datetime import datetime
-import string
+from utils import cleantext
 from collections import Counter
-
-
-def cleantext(text):
-    text = ''.join([x for x in text if not x.isdigit()])
-
-    remove_char = string.punctuation + '»«˃˂〈〉♦•—¿·'
-    for char in text:
-        if char in remove_char:
-            text = text.replace(char, '')
-
-    return (text.split())  # return list of words, alt tokenize
 
 
 def getonsets(text):
@@ -62,7 +51,7 @@ def getonsets(text):
     return (onsets, tokens)
 
 
-def legalipy(word, onsets):
+def LegaliPy(word, onsets):
 
     longest_onset = len(max(onsets, key=len))
     vowels = 'aeiouyàáâäæãåāèéêëēėęîïíīįìôöòóœøōõûüùúūůÿ'
@@ -142,7 +131,7 @@ def legalipy(word, onsets):
 
     return (syllset)
 
-# MAIN PROGRAM HERE
+
 if __name__ == '__main__':
 
     print("\n\nLegaliPy-ing...\n")
@@ -155,7 +144,7 @@ if __name__ == '__main__':
 
     toprintl = []
     for token in onsets[1]:
-        toprintl.append(legalipy(token, onsets[0]))
+        toprintl.append(LegaliPy(token, onsets[0]))
 
     toprint = ""
     for word in toprintl:
