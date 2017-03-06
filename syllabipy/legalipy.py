@@ -2,26 +2,25 @@ from __future__ import unicode_literals  # for python2 compatibility
 # -*- coding: utf-8 -*-
 # created at UC Berkeley 2015
 # Authors: Christopher Hench & Alex Estes © 2016
-# ==============================================================================
-
-'''This program syllabifies any text in any language
-solely on the Onset Maximization principle (Principle of Legality).
-Input is text file'''
 
 import codecs
-import re
-import csv
 import sys
 from datetime import datetime
-from utils import cleantext
+from util import cleantext
 from collections import Counter
 
 
-def getonsets(text):
+def getOnsets(text, threshold=.0002, clean=True):
+    '''
+    takes text and yields list of onsets and words
+    '''
 
     vowels = 'aeiouyàáâäæãåāèéêëēėęîïíīįìôöòóœøōõûüùúūůÿ'
 
-    tokens = cleantext(text)
+    if clean:
+        tokens = cleantext(text).split()
+    else:
+        tokens = text.split()
 
     onsets = []
     for word in tokens:
@@ -45,13 +44,17 @@ def getonsets(text):
 
     onsets = []
     for k, v in freq.items():
-        if (v / total_onsets) > .0002:
+        if (v / total_onsets) > threshold:
             onsets.append(k)
 
-    return (onsets, tokens)
+    return onsets
 
 
 def LegaliPy(word, onsets):
+    '''
+    This function syllabifies any text in any language
+    solely on the Onset Maximization principle (Principle of Legality)
+    '''
 
     longest_onset = len(max(onsets, key=len))
     vowels = 'aeiouyàáâäæãåāèéêëēėęîïíīįìôöòóœøōõûüùúūůÿ'
@@ -70,7 +73,8 @@ def LegaliPy(word, onsets):
 
     # begin main algorithm
     elif vowelcount > 1:
-        syll = ""
+
+        syll = ""  # to build syllable
 
         # following binaries trigger different routes
         onsetbinary = 0
@@ -78,7 +82,7 @@ def LegaliPy(word, onsets):
 
         for letter in revword:
 
-            if newsyllbinary == 1:  # i.e. if we have a new syllable
+            if newsyllbinary == 1:  # if we have a new syllable
                 if letter.lower() not in vowels:
                     syll += letter
 
@@ -87,9 +91,9 @@ def LegaliPy(word, onsets):
                     newsyllbinary = 0
                     continue
 
-            elif newsyllbinary == 0:  # i.e. no longer new syllable
+            elif newsyllbinary == 0:  # no longer new syllable
 
-                if syll == "":  # fixes last syllable
+                if syll == "":  # creates last syllable
                     syll += letter
 
                 elif (letter.lower() in onsets and syll[-1].lower() in vowels):
@@ -108,13 +112,13 @@ def LegaliPy(word, onsets):
                     syll += letter
                     onsetbinary = 1
 
-                # order is important for following two due to onsetbinary
-                # variable
-                # i.e. syllable doesn't end in vowel (onset not yet found)
+                # order is important for following two conditionals
+
+                # syllable doesn't end in vowel (onset not yet found)
                 elif letter.lower() in vowels and onsetbinary == 0:
                     syll += letter
 
-                # i.e. syllable ends in vowel, onset found, restart syllable
+                # syllable ends in vowel, onset found, restart syllable
                 elif letter.lower() in vowels and onsetbinary == 1:
                     syllset.append(syll)
                     syll = letter
@@ -132,6 +136,7 @@ def LegaliPy(word, onsets):
     return (syllset)
 
 
+# command line program
 if __name__ == '__main__':
 
     print("\n\nLegaliPy-ing...\n")
@@ -140,11 +145,11 @@ if __name__ == '__main__':
     with open(sfile, 'r', encoding='utf-8') as f:
         text = f.read()
 
-    onsets = getonsets(text)
+    onsets = getOnsets(text)
 
     toprintl = []
-    for token in onsets[1]:
-        toprintl.append(LegaliPy(token, onsets[0]))
+    for token in cleantext(text).split():
+        toprintl.append(LegaliPy(token, onsets))
 
     toprint = ""
     for word in toprintl:
@@ -156,7 +161,7 @@ if __name__ == '__main__':
                 toprint += syll
         toprint += " "
 
-    onsetprint = (" - ".join([x for x in onsets[0]]) + '\n\n')
+    onsetprint = (" - ".join([x for x in onsets]) + '\n\n')
 
     prologue = "Following onsets > .02 percent deemed 'legal':\n"
 
