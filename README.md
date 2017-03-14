@@ -3,6 +3,14 @@ Collection of syllabification algorithms designed to be universal, aimed at low-
 
 LegaliPy and SonoriPy have been incorporated into the [Talisman](https://github.com/Yomguithereal/talisman) NLP library for JavaScript.
 
+## installation
+
+syllabipy can be installed with `pip`:
+
+~~~
+$ pip install syllabipy
+~~~
+
 ### LegaliPy
 
 To get legal onsets for variable `text`:
