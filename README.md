@@ -16,14 +16,14 @@ $ pip install syllabipy
 To get legal onsets for variable `text`:
 
 ~~~
->>> from legalipy import getOnsets
+>>> from syllabipy.legalipy import getOnsets
 >>> getOnsets(text)
 ~~~
 
 To syllabify a word:
 
 ~~~
->>> from legalipy import LegaliPy
+>>> from syllabipy.legalipy import LegaliPy
 >>> LegaliPy(word, getOnsets(text))
 ~~~
 
@@ -38,7 +38,7 @@ $ python legalipy.py text.txt
 To syllabify a word:
 
 ~~~
->>> from sonoripy import SonoriPy
+>>> from syllabipy.sonoripy import SonoriPy
 >>> SonoriPy("justification")
 ['jus', 'ti', 'fi', 'ca', 'tion']
 ~~~

@@ -5,7 +5,7 @@ from __future__ import unicode_literals  # for python2 compatibility
 
 import codecs
 import sys
-from util import cleantext
+from syllabipy.util import cleantext
 from datetime import datetime
 
 

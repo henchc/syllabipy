@@ -6,7 +6,7 @@ from __future__ import unicode_literals  # for python2 compatibility
 import codecs
 import sys
 from datetime import datetime
-from util import cleantext
+from syllabipy.util import cleantext
 from collections import Counter
 
 
