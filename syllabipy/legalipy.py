@@ -1,7 +1,7 @@
 from __future__ import unicode_literals  # for python2 compatibility
 # -*- coding: utf-8 -*-
 # created at UC Berkeley 2015
-# Authors: Christopher Hench & Alex Estes © 2016
+# Authors: Christopher Hench & Alex Estes © 2015-2019
 
 import codecs
 import sys
