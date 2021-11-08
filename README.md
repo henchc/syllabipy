@@ -48,3 +48,24 @@ Command line usage to syllabify a text file:
 ~~~
 $ python sonoripy.py text.txt
 ~~~
+
+## Development
+
+To get started, create a python virtual environment e.g. with:
+
+~~~
+python3 -m venv .venv
+source .venv/bin/activate
+~~~
+
+Then install development dependencies with:
+
+~~~
+pip install -r requirements-dev.txt
+~~~
+
+Run the tests with:
+
+~~~
+pytest tests.py
+~~~
