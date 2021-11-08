@@ -1,0 +1,37 @@
+test-000:
+  input: history
+  output:
+    - his
+    - to
+    - ry
+
+test-001:
+  input: justification
+  output:
+    - jus
+    - ti
+    - fi
+    - ca
+    - tion
+
+test-002:
+  input: channel
+  output:
+    - chan
+    - nel
+
+test-003:
+  input: chapel
+  output:
+    - cha
+    - pel
+
+test-004:
+  input: unconstitutional
+  output:
+    - un
+    - cons
+    - ti
+    - tu
+    - tio
+    - nal
