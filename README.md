@@ -1,7 +1,7 @@
 # syllabipy
 Collection of syllabification algorithms designed to be universal, aimed at low-resource languages without look-up techniques.
 
-*Note: SonoriPy has been incorporated into [NLTK](https://github.com/nltk/nltk/blob/develop/nltk/tokenize/sonority_sequencing.py) for Python; LegaliPy and SonoriPy have been incorporated into [Talisman](https://github.com/Yomguithereal/talisman) for JavaScript. This repo will not be updated, we recommend you use one of these two libraries.*
+*Note: SonoriPy & LegaliPy have been incorporated into [NLTK](https://github.com/nltk/nltk/blob/develop/nltk/tokenize/) for Python and [Talisman](https://github.com/Yomguithereal/talisman) for JavaScript. This repo will not be updated, we recommend you use one of these two libraries.*
 
 ## installation
 
